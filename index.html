@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аренда Unitree Go2 Pro — Робособака из будущего</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">GO2 PRO</div>
+        <nav>
+            <a href="#home">Главная</a>
+            <a href="#gallery">Медиа</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <!-- Кнопка переключения темы под хедером -->
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Сменить тему">
+            <span class="toggle-track">
+                <span class="toggle-icon sun">☀️</span>
+                <span class="toggle-icon moon">🌙</span>
+                <span class="toggle-thumb"></span>
+            </span>
+        </button>
+
+        <h2>Робот собака Unitree Go2 Pro</h2>
+        <p>Воплощение искусственного интеллекта</p>
+        <a href="#contacts" class="neon-btn">Забронировать</a>
+    </section>
+
+    <!-- ПЛИТОЧНАЯ ГАЛЕРЕЯ (BENTO GRID) -->
+    <section id="gallery">
+        <h2>Медиа</h2>
+        
+        <div class="media-grid">
+            <!-- Главная обложка -->
+            <div class="media-item main-cover">
+                <img src="oblojka.png" alt="Главная обложка Unitree Go2 Pro">
+            </div>
+            
+            <!-- Фотографии -->
+            <div class="media-item">
+                <img src="sobaka1.png" alt="Unitree Go2 Pro - Фото 1">
+            </div>
+            <div class="media-item">
+                <img src="sobaka2.png" alt="Unitree Go2 Pro - Фото 2">
+            </div>
+            
+            <!-- Видео -->
+            <div class="media-item">
+                <video src="lidar.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div class="media-item">
+                <video src="truk.mp4" autoplay loop muted playsinline></video>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts">
+        <h2>Связь с нами</h2>
+        <p>Бронь открыта. Свяжитесь с нами, чтобы зафиксировать дату.</p>
+        <a href="#" class="neon-btn">Написать в Telegram</a>
+    </section>
+
+    <!-- Кнопка "Наверх" -->
+    <a href="#home" id="scrollTopBtn" title="Вернуться наверх">&#8679;</a>
+
+    <!-- ФОНОВЫЕ ГОЛОГРАФИЧЕСКИЕ ФИГУРЫ -->
+    <div class="holo-background">
+        <div class="holo-shape shape-1"></div>
+        <div class="holo-shape shape-2"></div>
+        <div class="holo-shape shape-3"></div>
+    </div>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
