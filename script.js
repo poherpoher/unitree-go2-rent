@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const themeToggleBtn = document.getElementById('themeToggle');
 
     if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', function () {
+        themeToggleBtn.addEventListener('click', function (event) {
+            event.stopPropagation(); // Предотвращаем конфликты и скачки событий
+            
             document.body.classList.toggle('dark-theme');
             
             if (document.body.classList.contains('dark-theme')) {
