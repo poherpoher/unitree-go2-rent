@@ -110,8 +110,8 @@ h2 {
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), background 0.4s ease;
 }
 
-.theme-toggle:hover .toggle-thumb {
-    transform: scale(1.1);
+.theme-toggle:hover {
+    opacity: 0.8; /* Просто легкое изменение прозрачности вместо скачков размера */
 }
 
 /* --- ГЛАВНЫЙ ЭКРАН --- */
@@ -446,15 +446,15 @@ body.dark-theme .holo-shape {
 /* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
 @media (max-width: 768px) {
     header {
-        padding: 15px 20px; /* Уменьшаем отступы по бокам шапки */
+        padding: 15px 20px; 
     }
 
     .logo {
-        font-size: 18px; /* Чуть уменьшаем логотип, чтобы освободить место */
+        font-size: 18px; 
     }
 
     nav a {
-        margin-left: 12px; /* Уменьшаем расстояние между ссылками в меню */
-        font-size: 14px;   /* Делаем шрифт пунктов меню чуть компактнее */
+        margin-left: 12px; 
+        font-size: 14px;   
     }
 }
