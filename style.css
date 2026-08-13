@@ -47,6 +47,13 @@ header {
     font-weight: 900;
     font-size: 20px;
     letter-spacing: 1px;
+    flex: 1;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
 }
 
 nav a {
@@ -847,9 +854,9 @@ body.dark-theme .cookie-content p {
 
 /* --- КРУПНАЯ ИНДУСТРИАЛЬНАЯ МЕТКА (ОПТИМАЛЬНАЯ ДЛИНА) --- */
 .tech-badge {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    left: auto;
+    transform: none;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -859,6 +866,7 @@ body.dark-theme .cookie-content p {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     pointer-events: none;
+    margin: 0 auto;
 }
 
 /* Оптимальная длина блока с полосками (убавили на 3 штуки) */
@@ -1080,4 +1088,18 @@ body.dark-theme .tech-number {
 @keyframes text-fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ИСПРАВЛЕНИЕ НАЕЗДА ШАПКИ ПРИ ЗУМЕ --- */
+header, .header, .navbar {
+    position: sticky !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 0;
 }
