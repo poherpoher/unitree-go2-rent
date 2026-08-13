@@ -96,30 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- КАЛЬКУЛЯТОР АРЕНДЫ ---
-    const rentalDaysInput = document.getElementById('rental-days');
-    const daysVal = document.getElementById('days-val');
-    const operatorServiceCheckbox = document.getElementById('operator-service');
-    const totalPriceEl = document.getElementById('total-price');
-
-    function calculateTotal() {
-        if (!rentalDaysInput || !totalPriceEl) return;
-        const days = parseInt(rentalDaysInput.value);
-        daysVal.textContent = days;
-
-        let basePricePerDay = 15000;
-        let operatorCostPerDay = operatorServiceCheckbox.checked ? 5000 : 0;
-        let total = days * (basePricePerDay + operatorCostPerDay);
-        
-        totalPriceEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
-    }
-
-    if (rentalDaysInput) {
-        rentalDaysInput.addEventListener('input', calculateTotal);
-        operatorServiceCheckbox.addEventListener('change', calculateTotal);
-        calculateTotal();
-    }
-
     // --- FAQ АККОРДЕОН ---
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
@@ -133,55 +109,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // --- ФОРМА ЗАЯВКИ И ОТПРАВКА В TELEGRAM ---
-const bookingForm = document.getElementById('booking-form');
-const toast = document.getElementById('toast-notification');
+    const bookingForm = document.getElementById('booking-form');
+    const toast = document.getElementById('toast-notification');
 
-if (bookingForm) {
-    bookingForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        
-        // Собираем данные из инпутов, калькулятора и чекбокса
-        const nameInput = document.getElementById('client-name');
-        const phoneInput = document.getElementById('client-phone');
-        const daysInput = document.getElementById('rental-days');
-        const totalEl = document.getElementById('total-price');
-        const operatorCheckbox = document.getElementById('operator-service'); // <--- добавили чекбокс
-
-        const formData = {
-            name: nameInput ? nameInput.value : '',
-            phone: phoneInput ? phoneInput.value : '',
-            days: daysInput ? daysInput.value : '1',
-            total: totalEl ? totalEl.textContent : '0 ₽',
-            operator: operatorCheckbox ? (operatorCheckbox.checked ? 'Да (+5 000 ₽/день)' : 'Нет') : 'Нет' // <--- передаем статус
-        };
-
-        try {
-            const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
             
-            if (response.ok) {
-                if (toast) {
-                    toast.classList.add('show');
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 4000);
+            const nameInput = document.getElementById('client-name');
+            const phoneInput = document.getElementById('client-phone');
+
+            const formData = {
+                name: nameInput ? nameInput.value : '',
+                phone: phoneInput ? phoneInput.value : '',
+                tariff: 'Почасовая аренда (10 000 ₽/час, мин. 2 часа)'
+            };
+
+            try {
+                const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    if (toast) {
+                        toast.classList.add('show');
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        }, 4000);
+                    }
+                    bookingForm.reset();
+                } else {
+                    alert('Ошибка при отправке. Попробуйте позже.');
                 }
-                bookingForm.reset();
-                if (typeof calculateTotal === 'function') {
-                    calculateTotal();
-                }
-            } else {
-                alert('Ошибка при отправке. Попробуйте позже.');
+            } catch (err) {
+                alert('Ошибка соединения с сервером.');
+                console.error(err);
             }
-        } catch (err) {
-            alert('Ошибка соединения с сервером.');
-            console.error(err);
-        }
-    });
-}
+        });
+    }
 
     // --- АНИМАЦИЯ ПОЯВЛЕНИЯ МЕДИА-БЛОКОВ ---
     const observer = new IntersectionObserver(function (entries) {
@@ -208,16 +175,13 @@ if (bookingForm) {
             const isCurrentlyDark = document.body.classList.contains('dark-theme');
             const nextDarkState = !isCurrentlyDark;
 
-            // Узнаем координаты центра кнопки
             const rect = themeToggleBtn.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
-            // Передаем координаты в CSS-переменные
             document.documentElement.style.setProperty('--x', x + 'px');
             document.documentElement.style.setProperty('--y', y + 'px');
 
-            // Если браузер не поддерживает View Transitions — просто переключаем
             if (!document.startViewTransition) {
                 if (nextDarkState) {
                     document.body.classList.add('dark-theme');
@@ -229,14 +193,12 @@ if (bookingForm) {
                 return;
             }
 
-            // Управляем классом направления анимации
             if (!nextDarkState) {
                 document.documentElement.classList.add('transitioning-to-light');
             } else {
                 document.documentElement.classList.remove('transitioning-to-light');
             }
 
-            // Запуск нативного перехода
             const transition = document.startViewTransition(() => {
                 if (nextDarkState) {
                     document.body.classList.add('dark-theme');
@@ -247,7 +209,6 @@ if (bookingForm) {
                 }
             });
 
-            // Очищаем класс после завершения анимации
             transition.finished.finally(() => {
                 document.documentElement.classList.remove('transitioning-to-light');
             });

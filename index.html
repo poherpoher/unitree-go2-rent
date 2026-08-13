@@ -19,7 +19,7 @@
         <nav>
             <a href="#home">Главная</a>
             <a href="#gallery">Медиа</a>
-            <a href="#calculator">Калькулятор</a>
+            <a href="#rental-terms">Аренда</a>
             <a href="#faq">FAQ</a>
             <a href="#contacts">Контакты</a>
         </nav>
@@ -63,29 +63,42 @@
         </div>
     </section>
 
-    <!-- КАЛЬКУЛЯТОР АРЕНДЫ -->
-    <section id="calculator">
-        <h2>Калькулятор аренды</h2>
-        <p>Рассчитайте ориентировочную стоимость аренды робота Unitree Go2 Pro.</p>
-        
-        <div class="calc-card">
-            <div class="calc-group">
-                <label for="rental-days">Срок аренды (дней): <span id="days-val">1</span></label>
-                <input type="range" id="rental-days" min="1" max="30" value="1">
-            </div>
-            
-            <div class="calc-options">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="operator-service"> Услуга оператора (+5 000 ₽/день)
-                </label>
-            </div>
-            
-            <div class="calc-result">
-                <span>Итого:</span>
-                <span id="total-price">15 000 ₽</span>
-            </div>
+    <!-- Секция Условия аренды -->
+<section id="rental-terms" class="rental-terms">
+    <h2 class="section-title">Условия аренды</h2>
+    <div class="terms-grid">
+        <div class="term-card">
+            <div class="icon">🕒</div>
+            <h3>Минимальный срок</h3>
+            <p>Аренда возможна на срок от 2 часов.</p>
         </div>
-    </section>
+        <div class="term-card">
+            <div class="icon">💰</div>
+            <h3>Стоимость</h3>
+            <p>Базовая цена — 10 000 рублей в час.</p>
+        </div>
+        <div class="term-card">
+            <div class="icon">👤</div>
+            <h3>Оператор</h3>
+            <p>Работа робота осуществляется только в сопровождении нашего оператора.</p>
+        </div>
+        <div class="term-card">
+            <div class="icon">☀️</div>
+            <h3>Погода / Мероприятия</h3>
+            <p>Использование возможно в помещении или на улице в сухую погоду.</p>
+        </div>
+        <div class="term-card">
+            <div class="icon">📍</div>
+            <h3>География</h3>
+            <p>Аренда предоставляется только на территории г. Хабаровска и Хабаровского края.</p>
+        </div>
+        <div class="term-card">
+            <div class="icon">🤝</div>
+            <h3>Дополнительно</h3>
+            <p>Аренда на более длительный срок и/или в другом регионе возможна только после согласования с менеджером.</p>
+        </div>
+    </div>
+</section>
 
     <!-- СЕКЦИЯ FAQ -->
     <section id="faq">
@@ -174,6 +187,7 @@
                     <ul>
                         <li><a href="#home">Главная</a></li>
                         <li><a href="#gallery">Галерея</a></li>
+                        <li><a href="#rental-terms">Аренда</a></li>
                         <li><a href="#contacts">Контакты</a></li>
                     </ul>
                 </div>
