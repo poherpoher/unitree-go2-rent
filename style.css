@@ -403,6 +403,7 @@ h2 {
 
 .booking-form {
     max-width: 450px;
+    margin-top: 20px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -999,4 +1000,84 @@ body.dark-theme .tech-number {
     opacity: 0.8;
     line-height: 1.5; 
     font-size: 0.95rem;
+}
+
+/* Отступ между текстом и формой бронирования */
+#contacts p {
+    margin-bottom: 25px !important;
+}
+
+/* --- КИБЕРНЕТИЧЕСКАЯ АНИМАЦИЯ КНОПКИ --- */
+.submit-btn {
+    position: relative;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 52px;
+}
+
+.btn-text {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+/* Состояние отправки (сканирования): плавная кибер-волна и смена текста */
+.submit-btn.loading {
+    pointer-events: none;
+    background: linear-gradient(135deg, #00a8ff, #00cec9, #0984e3) !important;
+    background-size: 200% 200% !important;
+    animation: cyber-gradient 1.8s ease infinite;
+    box-shadow: 0 0 25px rgba(0, 168, 255, 0.6);
+}
+
+@keyframes cyber-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Меняем текст прямо во время загрузки без дерганий */
+.submit-btn.loading .btn-text {
+    opacity: 0;
+    transform: translateY(-10px);
+    position: absolute;
+}
+
+.submit-btn.loading::after {
+    content: "СКАНИРОВАНИЕ...";
+    position: absolute;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    animation: text-fade-in 0.3s ease forwards;
+}
+
+/* Состояние успеха: зеленый кибер-сигнал */
+.submit-btn.success {
+    pointer-events: none;
+    background-color: #2ed573 !important;
+    box-shadow: 0 0 30px rgba(46, 213, 115, 0.8);
+}
+
+.submit-btn.success .btn-text {
+    opacity: 0;
+    position: absolute;
+}
+
+.submit-btn.success::after {
+    content: "SYSTEM READY ✓";
+    position: absolute;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    animation: text-fade-in 0.3s ease forwards;
+}
+
+@keyframes text-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

@@ -128,14 +128,7 @@
     <!-- СЕКЦИЯ КОНТАКТОВ И ЗАЯВКИ -->
     <section id="contacts">
         <h2>Связь и бронирование</h2>
-        <p>Бронь открыта. Свяжитесь с нами или оставьте заявку.</p>
-        
-        <!-- Интерактивная кнопка телефона -->
-        <div class="contact-box" style="margin-bottom: 30px;">
-            <button id="phone-btn" class="neon-btn phone-toggle-btn">Позвонить</button>
-        </div>
-
-        <p style="margin-bottom: 15px; font-weight: bold;">Или оставьте заявку на бронь:</p>
+        <p>Бронь открыта. Оставьте заявку, и мы свяжемся с вами в ближайшее время.</p>
         
         <form id="booking-form" class="booking-form">
             <input type="text" id="client-name" placeholder="Ваше имя" required class="form-input">
@@ -146,7 +139,9 @@
                 <label for="agreement-checkbox">Я согласен(а) с <a href="privacy.html" target="_blank">политикой конфиденциальности</a> и на обработку персональных данных</label>
             </div>
             
-            <button type="submit" class="neon-btn submit-btn">Забронировать</button>
+            <button type="submit" class="neon-btn submit-btn">
+    <span class="btn-text">Забронировать</span>
+            </button>
         </form>
     </section>
 
@@ -217,6 +212,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=3"></script>
 </body>
 </html>

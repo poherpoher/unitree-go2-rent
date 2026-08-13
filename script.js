@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Двигаем фигуры
         if (shape1) {
             shape1.style.transform = "translateY(" + (scrollValue * 0.15) + "px) rotate(45deg)";
         }
@@ -83,19 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- ИНТЕРАКТИВНАЯ КНОПКА ТЕЛЕФОНА ---
-    const phoneBtn = document.getElementById('phone-btn');
-
-    if (phoneBtn) {
-        phoneBtn.addEventListener('click', function () {
-            const phoneLink = document.createElement('a');
-            phoneLink.href = 'tel:+79141570384';
-            phoneLink.className = 'phone-revealed';
-            phoneLink.textContent = '+79141570384';
-            phoneBtn.replaceWith(phoneLink);
-        });
-    }
-
     // --- FAQ АККОРДЕОН ---
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
@@ -108,6 +94,50 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // --- МАСКИ И ОГРАНИЧЕНИЯ В ПОЛЯХ ФОРМЫ ---
+    const nameInput = document.getElementById('client-name');
+    const phoneInput = document.getElementById('client-phone');
+
+    if (nameInput) {
+        // Разрешаем только буквы (русские/латинские) и пробелы
+        nameInput.addEventListener('input', function () {
+            this.value = this.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, '');
+        });
+    }
+
+    if (phoneInput) {
+        // Автоматически ставим плюсик при фокусе, если поле пустое
+        phoneInput.addEventListener('focus', function () {
+            if (!this.value) {
+                this.value = '+';
+            }
+        });
+
+        // Защита: плюс только в самом начале, дальше — строго цифры
+        phoneInput.addEventListener('input', function () {
+            let val = this.value;
+            // Убираем всё, кроме плюса и цифр
+            val = val.replace(/[^\+\d]/g, '');
+            // Если пользователь умудрился поставить плюс не в начало — убираем лишние плюсы
+            if (val.indexOf('+') > 0) {
+                val = val.replace(/\+/g, '');
+                val = '+' + val;
+            }
+            // Если стерли всё, возвращаем плюс при фокусе
+            if (!val.startsWith('+') && val.length > 0) {
+                val = '+' + val;
+            }
+            this.value = val;
+        });
+
+        phoneInput.addEventListener('keydown', function (e) {
+            // Если пытаются удалить единственный плюс, запрещаем или даем сбросить
+            if (e.key === 'Backspace' && this.value === '+') {
+                e.preventDefault();
+            }
+        });
+    }
+
     // --- ФОРМА ЗАЯВКИ И ОТПРАВКА В TELEGRAM ---
     const bookingForm = document.getElementById('booking-form');
     const toast = document.getElementById('toast-notification');
@@ -116,14 +146,16 @@ document.addEventListener("DOMContentLoaded", function () {
         bookingForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             
-            const nameInput = document.getElementById('client-name');
-            const phoneInput = document.getElementById('client-phone');
-
+            const submitBtn = bookingForm.querySelector('.submit-btn');
             const formData = {
                 name: nameInput ? nameInput.value : '',
-                phone: phoneInput ? phoneInput.value : '',
-                tariff: 'Почасовая аренда (10 000 ₽/час, мин. 2 часа)'
+                phone: phoneInput ? phoneInput.value : ''
             };
+
+            // 1. Запускаем анимацию загрузки (кнопка сжимается и крутится)
+            if (submitBtn) {
+                submitBtn.classList.add('loading');
+            }
 
             try {
                 const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
@@ -132,18 +164,38 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify(formData)
                 });
                 
+                // Делаем небольшую задержку (минимум 1 секунду), чтобы анимация смотрелась плавно и круто
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
                 if (response.ok) {
+                    // 2. Успех: превращаем кнопку в зеленую галочку
+                    if (submitBtn) {
+                        submitBtn.classList.remove('loading');
+                        submitBtn.classList.add('success');
+                    }
+
                     if (toast) {
                         toast.classList.add('show');
                         setTimeout(() => {
                             toast.classList.remove('show');
                         }, 4000);
                     }
+
                     bookingForm.reset();
+
+                    // Через 2.5 секунды возвращаем кнопку в обычное состояние
+                    setTimeout(() => {
+                        if (submitBtn) {
+                            submitBtn.classList.remove('success');
+                        }
+                    }, 2500);
+
                 } else {
+                    if (submitBtn) submitBtn.classList.remove('loading');
                     alert('Ошибка при отправке. Попробуйте позже.');
                 }
             } catch (err) {
+                if (submitBtn) submitBtn.classList.remove('loading');
                 alert('Ошибка соединения с сервером.');
                 console.error(err);
             }
