@@ -1,0 +1,912 @@
+/* --- БАЗОВЫЕ СТИЛИ --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Переменные для анимации лужи при смене темы */
+:root {
+    --x: 50%;
+    --y: 50%;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #2f3640;
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* --- ХЕДЕР С ЭФФЕКТОМ МАТОВОГО СТЕКЛА --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: rgba(210, 215, 222, 0.88); /* Плотный сероватый оттенок для светлой темы */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: #2f3640;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: 0.3s ease; 
+}
+
+nav a:hover {
+    color: #00a8ff;
+    text-shadow: 0 0 8px rgba(0, 168, 255, 0.4); 
+}
+
+section {
+    padding: 110px 20px 80px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+h2 {
+    color: #111111;
+    margin-bottom: 20px;
+    font-size: 32px;
+    transition: color 0.4s ease;
+}
+
+/* --- КНОПКА ТЕМЫ (СОЛНЦЕ / ЛУНА) ПОД ХЕДДЕРОМ --- */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    margin-bottom: 25px;
+    pointer-events: auto;
+}
+
+.theme-toggle * {
+    pointer-events: none;
+}
+
+.toggle-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 64px;
+    height: 32px;
+    background: rgba(180, 190, 200, 0.35);
+    border: 1px solid rgba(180, 190, 200, 0.6);
+    border-radius: 50px;
+    padding: 0 5px;
+    position: relative;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.toggle-icon {
+    font-size: 14px;
+    z-index: 1;
+    user-select: none;
+}
+
+.toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), background 0.4s ease;
+}
+
+.theme-toggle:hover {
+    opacity: 0.8;
+}
+
+/* --- ГЛАВНЫЙ ЭКРАН --- */
+#home {
+    position: relative;
+    background-color: transparent; 
+    background-image: none; 
+    z-index: 5;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#home h2 {
+    font-size: 42px;
+    font-weight: 800;
+    color: #111111;
+}
+
+#home p {
+    font-size: 18px;
+    color: #57606f;
+    transition: color 0.4s ease;
+}
+
+/* --- КНОПКИ И АНИМАЦИИ --- */
+.neon-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    color: #ffffff;
+    background-color: #00a8ff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+    animation: neon-pulse-light 2s infinite alternate;
+}
+
+@keyframes neon-pulse-light {
+    0% { box-shadow: 0 0 10px rgba(0, 168, 255, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(0, 168, 255, 0.6), 0 0 30px rgba(0, 168, 255, 0.2); }
+    100% { box-shadow: 0 0 10px rgba(0, 168, 255, 0.3); }
+}
+
+.neon-btn:hover {
+    background-color: #0097e6;
+    transform: translateY(-2px);
+}
+
+/* --- СТИЛИ ДЛЯ ПЛИТОЧНОЙ ГАЛЕРЕИ (МЕДИА) --- */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px; 
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.media-item.main-cover {
+    grid-column: 1 / -1; 
+}
+
+.media-item {
+    position: relative;
+    z-index: 5;
+    border-radius: 20px; 
+    overflow: hidden; 
+    background: #f4f6f9; 
+    border: 1px solid #dcdde1; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+}
+
+.media-item:hover {
+    box-shadow: 0 15px 35px rgba(0, 168, 255, 0.2);
+    border-color: #00a8ff;
+    transform: translateY(-8px); 
+    background: #ffffff;
+}
+
+.media-item img, 
+.media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+.main-cover img {
+    max-height: 500px;
+    object-position: center;
+}
+
+@media (max-width: 768px) {
+    .media-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* --- КАЛЬКУЛЯТОР АРЕНДЫ --- */
+.calc-card {
+    position: relative;
+    z-index: 5;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #f4f6f9;
+    border: 1px solid #dcdde1;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.calc-group {
+    margin-bottom: 20px;
+}
+
+.calc-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2f3640;
+}
+
+.calc-group input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.calc-options {
+    margin-bottom: 25px;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    color: #57606f;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #00a8ff;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 15px;
+}
+
+/* --- FAQ АККОРДЕОН --- */
+.faq-container {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.faq-item {
+    position: relative;
+    z-index: 5;
+    background: #f4f6f9;
+    border: 1px solid #dcdde1;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2f3640;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.faq-arrow {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+    padding: 0 20px;
+    color: #57606f;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 150px;
+    padding: 0 20px 18px 20px;
+}
+
+.faq-item.active .faq-arrow {
+    transform: rotate(45deg);
+}
+
+/* --- СЕКЦИЯ КОНТАКТОВ И ФОРМА --- */
+#contacts {
+    position: relative;
+    z-index: 5;
+    padding: 90px 20px 90px;
+    text-align: center;
+    background: #f4f6f9;
+    border-radius: 30px;
+    max-width: 900px;
+    margin: 40px auto;
+    border: 1px solid #dcdde1;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.contact-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+}
+
+.phone-toggle-btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.phone-revealed {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: 2px solid #00a8ff;
+    color: #00a8ff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInPhone 0.4s ease-out forwards;
+}
+
+.phone-revealed:hover {
+    background-color: #00a8ff;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+@keyframes fadeInPhone {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.booking-form {
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #dcdde1;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #00a8ff;
+}
+
+.form-agreement {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: #57606f;
+    line-height: 1.4;
+}
+
+.form-agreement input {
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.form-agreement a {
+    color: #00a8ff;
+    text-decoration: underline;
+}
+
+.submit-btn {
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    margin-top: 5px;
+    animation: none !important;
+}
+
+/* --- TOAST УВЕДОМЛЕНИЕ --- */
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2f3542;
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    font-size: 14px;
+    z-index: 99999;
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast.show {
+    bottom: 30px;
+}
+
+/* --- КНОПКА "НАВЕРХ" --- */
+#scrollTopBtn {
+    opacity: 0; 
+    pointer-events: none; 
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999; 
+    font-size: 22px; 
+    font-weight: 900;
+    color: #1a1a1a; 
+    background: rgba(47, 54, 64, 0.2); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); 
+    border: 1px solid rgba(47, 54, 64, 0.15); 
+    width: 50px; 
+    height: 50px;
+    text-align: center;
+    line-height: 48px; 
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); 
+    transition: all 0.3s ease-in-out; 
+}
+
+#scrollTopBtn.show {
+    opacity: 1 !important; 
+    pointer-events: auto !important;
+}
+
+#scrollTopBtn:hover {
+    transform: translateY(-5px); 
+    background: rgba(47, 54, 64, 0.35); 
+    box-shadow: 0 10px 25px rgba(0, 168, 255, 0.25); 
+    border-color: #00a8ff;
+    color: #00a8ff; 
+}
+
+/* --- СКРОЛЛБАР --- */
+::-webkit-scrollbar {
+    width: 8px; 
+}
+::-webkit-scrollbar-track {
+    background: #f4f6f9; 
+}
+::-webkit-scrollbar-thumb {
+    background: #b2bec3; 
+    border-radius: 4px; 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00a8ff; 
+}
+
+/* --- ГОЛОГРАФИЧЕСКИЕ ФИГУРЫ --- */
+.holo-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none; 
+    z-index: 1 !important; 
+}
+
+.holo-shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.07), 
+        0 0 25px rgba(0, 168, 255, 0.12),
+        0 0 50px rgba(224, 86, 253, 0.08);
+    transition: transform 0.1s ease-out, background 0.4s ease;
+    will-change: transform; 
+}
+
+.holo-shape::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px; 
+    background: linear-gradient(135deg, #00a8ff, #9b59b6, #ff7675, #fdcb6e, #00cec9);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.75;
+}
+
+.shape-1 { width: 300px; height: 300px; top: 10%; left: 5%; border-radius: 30px; transform: rotate(45deg); }
+.shape-2 { width: 200px; height: 400px; top: 50%; right: 8%; border-radius: 20px; transform: rotate(15deg); }
+.shape-3 { width: 350px; height: 350px; bottom: -100px; left: 20%; border-radius: 50%; }
+
+/* --- СТИЛИ МНОГОКОЛОНОЧНОГО ПОДВАЛА (МАТОВОЕ СТЕКЛО) --- */
+#footer {
+    position: relative;
+    padding: 60px 20px 30px;
+    background: rgba(210, 215, 222, 0.88); /* Плотный сероватый оттенок для светлой темы */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+    text-align: left;
+}
+
+.footer-content { max-width: 1200px; margin: 0 auto; }
+.footer-columns { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+.footer-col h4 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #111; transition: color 0.4s ease; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a, .footer-col p { font-size: 14px; color: #57606f; text-decoration: none; transition: color 0.3s ease; }
+.footer-col ul li a:hover { color: #00a8ff; }
+.footer-logo { font-size: 20px; font-weight: 900; margin-bottom: 10px; letter-spacing: 1px; color: #111; transition: color 0.4s ease; }
+.footer-desc { margin-bottom: 0; line-height: 1.5; }
+.legal-info { margin-top: 10px; }
+.legal-info p { font-size: 13px; margin-bottom: 3px; }
+.disclaimer-text { font-size: 11px !important; opacity: 0.7; margin-top: 8px; }
+.footer-bottom { border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #718093; flex-wrap: wrap; gap: 10px; transition: border-color 0.4s ease; }
+.footer-bottom .legal-link { color: #00a8ff; text-decoration: underline; margin-left: 10px; }
+.meta-note { font-size: 11px; opacity: 0.7; }
+
+@media (max-width: 900px) {
+    .footer-columns { grid-template-columns: 1fr 1fr; gap: 30px; }
+}
+
+@media (max-width: 600px) {
+    .footer-columns { grid-template-columns: 1fr; gap: 25px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* --- СТИЛИ БАННЕРА COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    bottom: -150px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: #f4f6f9;
+    border: 1px solid #dcdde1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px 25px;
+    border-radius: 20px;
+    z-index: 10000;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cookie-banner.show { bottom: 30px; }
+.cookie-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cookie-content p { font-size: 13px; color: #2f3640; text-align: left; margin: 0; line-height: 1.4; }
+.cookie-content a { color: #00a8ff; text-decoration: underline; }
+.cookie-btn { padding: 10px 20px; font-size: 14px; margin-top: 0 !important; white-space: nowrap; animation: none !important; }
+
+@media (max-width: 600px) {
+    .cookie-content { flex-direction: column; align-items: stretch; text-align: center; }
+    .cookie-content p { text-align: center; }
+    .cookie-btn { width: 100%; }
+}
+
+/* --- ЕДИНАЯ НЕОНОВАЯ ПОДСВЕТКА ДЛЯ КАРТОЧЕК --- */
+.calc-card, .faq-item {
+    transition: all 0.35s ease-in-out !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px;
+}
+
+.calc-card:hover, .faq-item:hover {
+    box-shadow: 0 0 25px rgba(0, 168, 255, 0.35), 0 0 50px rgba(224, 86, 253, 0.2) !important;
+    border-color: rgba(0, 168, 255, 0.7) !important;
+    transform: translateY(-2px);
+}
+
+#contacts {
+    transition: all 0.35s ease-in-out !important;
+    border: 1px solid transparent;
+    border-radius: 16px;
+}
+
+#contacts:hover {
+    box-shadow: 0 0 30px rgba(0, 168, 255, 0.25), 0 0 60px rgba(224, 86, 253, 0.15) !important;
+    border-color: rgba(0, 168, 255, 0.4) !important;
+}
+
+.booking-form, .contact-box {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* ==========================================
+   --- ТЕМНЫЙ РЕЖИМ (DARK THEME) ---
+   ========================================== */
+body.dark-theme {
+    background-color: #0f131a;
+    color: #f1f2f6;
+}
+
+body.dark-theme header,
+body.dark-theme #footer {
+    background-color: rgba(18, 20, 25, 0.9); /* Глубокий темно-серый оттенок для темной темы */
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme .logo,
+body.dark-theme nav a {
+    color: #f1f2f6;
+}
+
+body.dark-theme nav a:hover {
+    color: #00a8ff;
+}
+
+body.dark-theme h2 {
+    color: #ffffff !important;
+}
+
+body.dark-theme section p,
+body.dark-theme p {
+    color: #a4b0be !important;
+}
+
+body.dark-theme .toggle-thumb {
+    transform: translateX(32px);
+    background: #2f3542;
+}
+
+body.dark-theme .toggle-track {
+    background: rgba(47, 53, 66, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-theme .media-item,
+body.dark-theme #contacts,
+body.dark-theme .calc-card,
+body.dark-theme .faq-item {
+    background: #0f131a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .media-item:hover {
+    box-shadow: 0 15px 35px rgba(0, 168, 255, 0.25);
+    border-color: #00a8ff !important;
+}
+
+body.dark-theme #scrollTopBtn {
+    background: rgba(30, 39, 46, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f1f2f6;
+}
+
+body.dark-theme #scrollTopBtn:hover {
+    background: rgba(30, 39, 46, 0.9);
+    color: #00a8ff;
+    border-color: #00a8ff;
+}
+
+body.dark-theme .holo-shape {
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4), 
+        0 0 30px rgba(0, 168, 255, 0.15),
+        0 0 60px rgba(224, 86, 253, 0.1);
+}
+
+body.dark-theme .calc-group label,
+body.dark-theme .checkbox-label,
+body.dark-theme .faq-question,
+body.dark-theme .faq-answer,
+body.dark-theme .form-agreement,
+body.dark-theme .form-input {
+    color: #f1f2f6 !important;
+}
+
+body.dark-theme .form-input::placeholder {
+    color: #a4b0be;
+}
+
+body.dark-theme .footer-col h4,
+body.dark-theme .footer-logo {
+    color: #f1f2f6 !important;
+}
+
+body.dark-theme .footer-col ul li a, 
+body.dark-theme .footer-col p,
+body.dark-theme .footer-bottom {
+    color: #a4b0be !important;
+}
+
+body.dark-theme .footer-col ul li a:hover {
+    color: #00a8ff;
+}
+
+body.dark-theme .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.dark-theme .phone-revealed {
+    border-color: #00a8ff;
+    color: #00a8ff;
+}
+
+body.dark-theme .phone-revealed:hover {
+    background-color: #00a8ff;
+    color: #ffffff;
+}
+
+body.dark-theme .cookie-banner {
+    background: #0f131a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .cookie-content p {
+    color: #f1f2f6;
+}
+
+/* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
+@media (max-width: 768px) {
+    header { padding: 15px 20px; }
+    .logo { font-size: 18px; }
+    nav a { margin-left: 12px; font-size: 14px; }
+}
+
+/* --- НАСТОЯЩЕЕ ПОГЛОЩЕНИЕ И СХЛОПЫВАНИЕ ТЕМЫ (VIEW TRANSITIONS) --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+/* Переход на ТЕМНУЮ (круг растет из кнопки) */
+::view-transition-old(root) {
+    z-index: 1;
+}
+::view-transition-new(root) {
+    z-index: 9999;
+    animation: expand-circle 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Переход на СВЕТЛУЮ (темный экран сжимается обратно в кнопку) */
+.transitioning-to-light::view-transition-old(root) {
+    z-index: 9999;
+    animation: shrink-circle 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.transitioning-to-light::view-transition-new(root) {
+    z-index: 1;
+    animation: none;
+}
+
+/* Ключевые кадры анимации */
+@keyframes expand-circle {
+    0% {
+        clip-path: circle(0px at var(--x) var(--y));
+    }
+    100% {
+        clip-path: circle(150vmax at var(--x) var(--y));
+    }
+}
+
+@keyframes shrink-circle {
+    0% {
+        clip-path: circle(150vmax at var(--x) var(--y));
+    }
+    100% {
+        clip-path: circle(0px at var(--x) var(--y));
+    }
+}
+
+/* --- КРУПНАЯ ИНДУСТРИАЛЬНАЯ МЕТКА (ОПТИМАЛЬНАЯ ДЛИНА) --- */
+.tech-badge {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #111318; /* Черный для светлой темы */
+    border: 2px solid #2f3640;
+    padding: 8px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+/* Оптимальная длина блока с полосками (убавили на 3 штуки) */
+.tech-stripes {
+    width: 108px; /* Уменьшили ширину */
+    height: 30px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #ffffff,
+        #ffffff 6px,    /* Толщина полосы сохранена */
+        transparent 6px,
+        transparent 12px /* Шаг сохранен */
+    );
+    transform: skewX(-15deg);
+}
+
+/* Крупная цифра 02 */
+.tech-number {
+    font-family: monospace, sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #ffffff;
+}
+
+/* --- ПОДДЕРЖКА ТЕМНОЙ ТЕМЫ --- */
+body.dark-theme .tech-badge {
+    background: #f1f2f6; /* Белая плашка в темной теме */
+    border-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+}
+
+body.dark-theme .tech-stripes {
+    background: repeating-linear-gradient(
+        -45deg,
+        #111318,
+        #111318 6px,
+        transparent 6px,
+        transparent 12px
+    );
+}
+
+body.dark-theme .tech-number {
+    color: #111318;
+}
+
+/* Скрываем на мобильных экранах */
+@media (max-width: 900px) {
+    .tech-badge {
+        display: none;
+    }
+}
