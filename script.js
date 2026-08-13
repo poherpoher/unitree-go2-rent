@@ -133,54 +133,55 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // --- ФОРМА ЗАЯВКИ И ОТПРАВКА В TELEGRAM ---
-    const bookingForm = document.getElementById('booking-form');
-    const toast = document.getElementById('toast-notification');
+const bookingForm = document.getElementById('booking-form');
+const toast = document.getElementById('toast-notification');
 
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
+if (bookingForm) {
+    bookingForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
+        // Собираем данные из инпутов, калькулятора и чекбокса
+        const nameInput = document.getElementById('client-name');
+        const phoneInput = document.getElementById('client-phone');
+        const daysInput = document.getElementById('rental-days');
+        const totalEl = document.getElementById('total-price');
+        const operatorCheckbox = document.getElementById('operator-service'); // <--- добавили чекбокс
+
+        const formData = {
+            name: nameInput ? nameInput.value : '',
+            phone: phoneInput ? phoneInput.value : '',
+            days: daysInput ? daysInput.value : '1',
+            total: totalEl ? totalEl.textContent : '0 ₽',
+            operator: operatorCheckbox ? (operatorCheckbox.checked ? 'Да (+5 000 ₽/день)' : 'Нет') : 'Нет' // <--- передаем статус
+        };
+
+        try {
+            const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
             
-            // Надежно собираем данные из инпутов и калькулятора
-            const nameInput = document.getElementById('client-name');
-            const phoneInput = document.getElementById('client-phone');
-            const daysInput = document.getElementById('rental-days');
-            const totalEl = document.getElementById('total-price');
-
-            const formData = {
-                name: nameInput ? nameInput.value : '',
-                phone: phoneInput ? phoneInput.value : '',
-                days: daysInput ? daysInput.value : '1',
-                total: totalEl ? totalEl.textContent : '0 ₽'
-            };
-
-            try {
-                const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-                
-                if (response.ok) {
-                    if (toast) {
-                        toast.classList.add('show');
-                        setTimeout(() => {
-                            toast.classList.remove('show');
-                        }, 4000);
-                    }
-                    bookingForm.reset();
-                    // Сбрасываем калькулятор к дефолтным значениям
-                    if (typeof calculateTotal === 'function') {
-                        calculateTotal();
-                    }
-                } else {
-                    alert('Ошибка при отправке. Попробуйте позже.');
+            if (response.ok) {
+                if (toast) {
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 4000);
                 }
-            } catch (err) {
-                alert('Ошибка соединения с сервером.');
-                console.error(err);
+                bookingForm.reset();
+                if (typeof calculateTotal === 'function') {
+                    calculateTotal();
+                }
+            } else {
+                alert('Ошибка при отправке. Попробуйте позже.');
             }
-        });
-    }
+        } catch (err) {
+            alert('Ошибка соединения с сервером.');
+            console.error(err);
+        }
+    });
+}
 
     // --- АНИМАЦИЯ ПОЯВЛЕНИЯ МЕДИА-БЛОКОВ ---
     const observer = new IntersectionObserver(function (entries) {
