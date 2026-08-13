@@ -13,12 +13,14 @@
         <nav>
             <a href="#home">Главная</a>
             <a href="#gallery">Медиа</a>
+            <a href="#calculator">Калькулятор</a>
+            <a href="#faq">FAQ</a>
             <a href="#contacts">Контакты</a>
         </nav>
     </header>
 
     <section id="home">
-        <!-- Кнопка переключения темы под хедером -->
+        <!-- Кнопка переключения темы -->
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="Сменить тему">
             <span class="toggle-track">
                 <span class="toggle-icon sun">☀️</span>
@@ -37,20 +39,15 @@
         <h2>Медиа</h2>
         
         <div class="media-grid">
-            <!-- Главная обложка -->
             <div class="media-item main-cover">
                 <img src="oblojka.png" alt="Главная обложка Unitree Go2 Pro">
             </div>
-            
-            <!-- Фотографии -->
             <div class="media-item">
                 <img src="sobaka1.png" alt="Unitree Go2 Pro - Фото 1">
             </div>
             <div class="media-item">
                 <img src="sobaka2.png" alt="Unitree Go2 Pro - Фото 2">
             </div>
-            
-            <!-- Видео -->
             <div class="media-item">
                 <video src="lidar.mp4" autoplay loop muted playsinline></video>
             </div>
@@ -60,10 +57,78 @@
         </div>
     </section>
 
+    <!-- КАЛЬКУЛЯТОР АРЕНДЫ -->
+    <section id="calculator">
+        <h2>Калькулятор аренды</h2>
+        <p>Рассчитайте ориентировочную стоимость аренды робота Unitree Go2 Pro.</p>
+        
+        <div class="calc-card">
+            <div class="calc-group">
+                <label for="rental-days">Срок аренды (дней): <span id="days-val">1</span></label>
+                <input type="range" id="rental-days" min="1" max="30" value="1">
+            </div>
+            
+            <div class="calc-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="operator-service"> Услуга оператора (+5 000 ₽/день)
+                </label>
+            </div>
+            
+            <div class="calc-result">
+                <span>Итого:</span>
+                <span id="total-price">15 000 ₽</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ FAQ -->
+    <section id="faq">
+        <h2>Часто задаваемые вопросы</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">Сложно ли управлять роботом-собакой? <span class="faq-arrow">+</span></button>
+                <div class="faq-answer">
+                    <p>Совсем нет! Управлять можно с помощью интуитивного пульта или мобильного приложения. Также робот поддерживает автономный режим.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Что входит в комплект поставки? <span class="faq-arrow">+</span></button>
+                <div class="faq-answer">
+                    <p>Робот Unitree Go2 Pro, аккумулятор повышенной емкости, зарядное устройство, пульт ДУ и защитный кейс.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Как происходит аренда и доставка? <span class="faq-arrow">+</span></button>
+                <div class="faq-answer">
+                    <p>Мы доставляем робота по всей России. Оформляется официальный договор аренды и проводится инструктаж.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ КОНТАКТОВ И ЗАЯВКИ -->
     <section id="contacts">
-        <h2>Связь с нами</h2>
-        <p>Бронь открыта. Свяжитесь с нами, чтобы зафиксировать дату.</p>
-        <a href="#" class="neon-btn">Написать в Telegram</a>
+        <h2>Связь и бронирование</h2>
+        <p>Бронь открыта. Свяжитесь с нами или оставьте заявку.</p>
+        
+        <!-- Интерактивная кнопка телефона -->
+        <div class="contact-box" style="margin-bottom: 30px;">
+            <button id="phone-btn" class="neon-btn phone-toggle-btn">Позвонить</button>
+        </div>
+
+        <p style="margin-bottom: 15px; font-weight: bold;">Или оставьте заявку на бронь:</p>
+        
+        <form id="booking-form" class="booking-form">
+            <input type="text" id="client-name" placeholder="Ваше имя" required class="form-input">
+            <input type="tel" id="client-phone" placeholder="Номер телефона" required class="form-input">
+            
+            <div class="form-agreement">
+                <input type="checkbox" id="agreement-checkbox" required>
+                <label for="agreement-checkbox">Я согласен(а) с <a href="privacy.html" target="_blank">политикой конфиденциальности</a> и на обработку персональных данных</label>
+            </div>
+            
+            <button type="submit" class="neon-btn submit-btn">Забронировать</button>
+        </form>
     </section>
 
     <!-- Кнопка "Наверх" -->
@@ -75,8 +140,63 @@
         <div class="holo-shape shape-2"></div>
         <div class="holo-shape shape-3"></div>
     </div>
-    
-    <script src="script.js"></script>
 
+    <!-- БАННЕР COOKIES -->
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <p>Мы используем файлы cookie и локальное хранилище. Оставаясь на сайте, вы соглашаетесь с <a href="privacy.html" target="_blank">политикой конфиденциальности</a>.</p>
+            <button id="accept-cookies" class="neon-btn cookie-btn">Принять</button>
+        </div>
+    </div>
+
+    <!-- TOAST УВЕДОМЛЕНИЕ -->
+    <div id="toast-notification" class="toast">
+        <span>Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.</span>
+    </div>
+
+    <!-- ПОДВАЛ САЙТА -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">Unitree Go2 Pro</div>
+                    <p class="footer-desc">Воплощение искусственного интеллекта и передовых технологий в мире робототехники.</p>
+                </div>
+
+                <div class="footer-col footer-nav">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#gallery">Галерея</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-social">
+                    <h4>Социальные сети</h4>
+                    <ul>
+                        <li><a href="#" target="_blank">Telegram</a></li>
+                        <li><a href="#" target="_blank">ВКонтакте</a></li>
+                        <li><a href="#" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-details">
+                    <h4>Реквизиты</h4>
+                    <div class="legal-info">
+                        <p><strong>ИП Богатырев Д. А.</strong></p>
+                        <p>ИНН: 272324751515</p>
+                        <p class="disclaimer-text">Информация не является публичной офертой.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Unitree Go2 Pro. Все права защищены. <a href="privacy.html" class="legal-link">Политика конфиденциальности</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
