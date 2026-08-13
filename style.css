@@ -5,6 +5,12 @@
     box-sizing: border-box;
 }
 
+/* Переменные для анимации лужи при смене темы */
+:root {
+    --x: 50%;
+    --y: 50%;
+}
+
 html, body {
     height: 100%;
     overflow-x: hidden;
@@ -15,26 +21,26 @@ body {
     color: #2f3640;
     font-family: sans-serif;
     scroll-behavior: smooth;
-    transition: background-color 0.4s ease, color 0.4s ease;
     position: relative;
     min-height: 100vh;
 }
 
+/* --- ХЕДЕР С ЭФФЕКТОМ МАТОВОГО СТЕКЛА --- */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 50px;
-    background-color: rgba(244, 246, 249, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid #dcdde1;
+    background-color: rgba(210, 215, 222, 0.88); /* Плотный сероватый оттенок для светлой темы */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    transition: background-color 0.4s ease, border-color 0.4s ease;
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 .logo {
@@ -364,11 +370,14 @@ h2 {
     cursor: pointer;
     border: none;
     outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .phone-revealed {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 15px 30px;
     background-color: transparent;
     border: 2px solid #00a8ff;
     color: #00a8ff;
@@ -516,7 +525,7 @@ h2 {
     background: #00a8ff; 
 }
 
-/* --- ГОЛОГРАФИЧЕСКИЕ ФИГУРЫ (С О КАНТОВКОЙ И ПРЕЛОМЛЕНИЕМ) --- */
+/* --- ГОЛОГРАФИЧЕСКИЕ ФИГУРЫ --- */
 .holo-background {
     position: fixed;
     top: 0;
@@ -555,30 +564,104 @@ h2 {
     opacity: 0.75;
 }
 
-.shape-1 {
-    width: 300px;
-    height: 300px;
-    top: 10%;
-    left: 5%;
-    border-radius: 30px;
-    transform: rotate(45deg);
+.shape-1 { width: 300px; height: 300px; top: 10%; left: 5%; border-radius: 30px; transform: rotate(45deg); }
+.shape-2 { width: 200px; height: 400px; top: 50%; right: 8%; border-radius: 20px; transform: rotate(15deg); }
+.shape-3 { width: 350px; height: 350px; bottom: -100px; left: 20%; border-radius: 50%; }
+
+/* --- СТИЛИ МНОГОКОЛОНОЧНОГО ПОДВАЛА (МАТОВОЕ СТЕКЛО) --- */
+#footer {
+    position: relative;
+    padding: 60px 20px 30px;
+    background: rgba(210, 215, 222, 0.88); /* Плотный сероватый оттенок для светлой темы */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+    text-align: left;
 }
 
-.shape-2 {
-    width: 200px;
-    height: 400px;
-    top: 50%;
-    right: 8%;
+.footer-content { max-width: 1200px; margin: 0 auto; }
+.footer-columns { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+.footer-col h4 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #111; transition: color 0.4s ease; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a, .footer-col p { font-size: 14px; color: #57606f; text-decoration: none; transition: color 0.3s ease; }
+.footer-col ul li a:hover { color: #00a8ff; }
+.footer-logo { font-size: 20px; font-weight: 900; margin-bottom: 10px; letter-spacing: 1px; color: #111; transition: color 0.4s ease; }
+.footer-desc { margin-bottom: 0; line-height: 1.5; }
+.legal-info { margin-top: 10px; }
+.legal-info p { font-size: 13px; margin-bottom: 3px; }
+.disclaimer-text { font-size: 11px !important; opacity: 0.7; margin-top: 8px; }
+.footer-bottom { border-top: 1px solid rgba(0, 0, 0, 0.08); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #718093; flex-wrap: wrap; gap: 10px; transition: border-color 0.4s ease; }
+.footer-bottom .legal-link { color: #00a8ff; text-decoration: underline; margin-left: 10px; }
+.meta-note { font-size: 11px; opacity: 0.7; }
+
+@media (max-width: 900px) {
+    .footer-columns { grid-template-columns: 1fr 1fr; gap: 30px; }
+}
+
+@media (max-width: 600px) {
+    .footer-columns { grid-template-columns: 1fr; gap: 25px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* --- СТИЛИ БАННЕРА COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    bottom: -150px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: #f4f6f9;
+    border: 1px solid #dcdde1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px 25px;
     border-radius: 20px;
-    transform: rotate(15deg);
+    z-index: 10000;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.shape-3 {
-    width: 350px;
-    height: 350px;
-    bottom: -100px;
-    left: 20%;
-    border-radius: 50%; 
+.cookie-banner.show { bottom: 30px; }
+.cookie-content { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cookie-content p { font-size: 13px; color: #2f3640; text-align: left; margin: 0; line-height: 1.4; }
+.cookie-content a { color: #00a8ff; text-decoration: underline; }
+.cookie-btn { padding: 10px 20px; font-size: 14px; margin-top: 0 !important; white-space: nowrap; animation: none !important; }
+
+@media (max-width: 600px) {
+    .cookie-content { flex-direction: column; align-items: stretch; text-align: center; }
+    .cookie-content p { text-align: center; }
+    .cookie-btn { width: 100%; }
+}
+
+/* --- ЕДИНАЯ НЕОНОВАЯ ПОДСВЕТКА ДЛЯ КАРТОЧЕК --- */
+.calc-card, .faq-item {
+    transition: all 0.35s ease-in-out !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px;
+}
+
+.calc-card:hover, .faq-item:hover {
+    box-shadow: 0 0 25px rgba(0, 168, 255, 0.35), 0 0 50px rgba(224, 86, 253, 0.2) !important;
+    border-color: rgba(0, 168, 255, 0.7) !important;
+    transform: translateY(-2px);
+}
+
+#contacts {
+    transition: all 0.35s ease-in-out !important;
+    border: 1px solid transparent;
+    border-radius: 16px;
+}
+
+#contacts:hover {
+    box-shadow: 0 0 30px rgba(0, 168, 255, 0.25), 0 0 60px rgba(224, 86, 253, 0.15) !important;
+    border-color: rgba(0, 168, 255, 0.4) !important;
+}
+
+.booking-form, .contact-box {
+    box-shadow: none !important;
+    border: none !important;
 }
 
 /* ==========================================
@@ -589,9 +672,10 @@ body.dark-theme {
     color: #f1f2f6;
 }
 
-body.dark-theme header {
-    background-color: rgba(15, 19, 26, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+body.dark-theme header,
+body.dark-theme #footer {
+    background-color: rgba(18, 20, 25, 0.9); /* Глубокий темно-серый оттенок для темной темы */
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 body.dark-theme .logo,
@@ -603,14 +687,13 @@ body.dark-theme nav a:hover {
     color: #00a8ff;
 }
 
-body.dark-theme #home h2,
-body.dark-theme #contacts h2 {
-    color: #ffffff;
+body.dark-theme h2 {
+    color: #ffffff !important;
 }
 
-body.dark-theme #home p,
-body.dark-theme #contacts p {
-    color: #a4b0be;
+body.dark-theme section p,
+body.dark-theme p {
+    color: #a4b0be !important;
 }
 
 body.dark-theme .toggle-thumb {
@@ -657,8 +740,6 @@ body.dark-theme .holo-shape {
         0 0 60px rgba(224, 86, 253, 0.1);
 }
 
-/* --- ИСПРАВЛЕНИЕ ЦВЕТА ТЕКСТА В ТЕМНОЙ ТЕМЕ --- */
-
 body.dark-theme .calc-group label,
 body.dark-theme .checkbox-label,
 body.dark-theme .faq-question,
@@ -672,211 +753,15 @@ body.dark-theme .form-input::placeholder {
     color: #a4b0be;
 }
 
-/* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
-@media (max-width: 768px) {
-    header {
-        padding: 15px 20px; 
-    }
-    .logo {
-        font-size: 18px; 
-    }
-    nav a {
-        margin-left: 12px; 
-        font-size: 14px;   
-    }
-}
-
-/* --- СТИЛИ БАННЕРА COOKIES --- */
-.cookie-banner {
-    position: fixed;
-    bottom: -150px; 
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
-    background: #f4f6f9;
-    border: 1px solid #dcdde1;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    padding: 20px 25px;
-    border-radius: 20px;
-    z-index: 10000;
-    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.cookie-banner.show {
-    bottom: 30px; 
-}
-
-.cookie-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.cookie-content p {
-    font-size: 13px;
-    color: #2f3640;
-    text-align: left;
-    margin: 0;
-    line-height: 1.4;
-}
-
-.cookie-content a {
-    color: #00a8ff;
-    text-decoration: underline;
-}
-
-.cookie-btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    margin-top: 0 !important;
-    white-space: nowrap;
-    animation: none !important; 
-}
-
-body.dark-theme .cookie-banner {
-    background: #0f131a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-theme .cookie-content p {
-    color: #f1f2f6;
-}
-
-@media (max-width: 600px) {
-    .cookie-content {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
-    }
-    .cookie-content p {
-        text-align: center;
-    }
-    .cookie-btn {
-        width: 100%;
-    }
-}
-
-/* --- СТИЛИ МНОГОКОЛОНОЧНОГО ПОДВАЛА (ЗАКРЫВАЮЩЕГО ПУСТОТУ) --- */
-#footer {
-    position: relative;
-    padding: 60px 20px 30px;
-    background: #f4f6f9;
-    border-top: 1px solid #dcdde1;
-    z-index: 10;
-    transition: background 0.4s ease, border-color 0.4s ease;
-    text-align: left;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-columns {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-col h4 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #111;
-}
-
-.footer-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-col ul li {
-    margin-bottom: 8px;
-}
-
-.footer-col ul li a, 
-.footer-col p {
-    font-size: 14px;
-    color: #57606f;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-col ul li a:hover {
-    color: #00a8ff;
-}
-
-.footer-logo {
-    font-size: 20px;
-    font-weight: 900;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-    color: #111;
-}
-
-.footer-desc {
-    margin-bottom: 0;
-    line-height: 1.5;
-}
-
-.legal-info {
-    margin-top: 10px;
-}
-
-.legal-info p {
-    font-size: 13px;
-    margin-bottom: 3px;
-}
-
-.disclaimer-text {
-    font-size: 11px !important;
-    opacity: 0.7;
-    margin-top: 8px;
-}
-
-.footer-bottom {
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: #718093;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.footer-bottom .legal-link {
-    color: #00a8ff;
-    text-decoration: underline;
-    margin-left: 10px;
-}
-
-.meta-note {
-    font-size: 11px;
-    opacity: 0.7;
-}
-
-/* --- Подвал в темной теме --- */
-body.dark-theme #footer {
-    background: #0f131a !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 body.dark-theme .footer-col h4,
 body.dark-theme .footer-logo {
-    color: #fff;
+    color: #f1f2f6 !important;
 }
 
 body.dark-theme .footer-col ul li a, 
 body.dark-theme .footer-col p,
 body.dark-theme .footer-bottom {
-    color: #a4b0be;
+    color: #a4b0be !important;
 }
 
 body.dark-theme .footer-col ul li a:hover {
@@ -885,75 +770,6 @@ body.dark-theme .footer-col ul li a:hover {
 
 body.dark-theme .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* --- Адаптивность футера --- */
-@media (max-width: 900px) {
-    .footer-columns {
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-}
-
-@media (max-width: 600px) {
-    .footer-columns {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-
-/* --- Стили интерактивной кнопки телефона --- */
-.contact-box {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 60px;
-}
-
-.phone-toggle-btn {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.phone-revealed {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: transparent;
-    border: 2px solid #00a8ff;
-    color: #00a8ff;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 800;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2);
-    transition: all 0.3s ease;
-    animation: fadeInPhone 0.4s ease-out forwards;
-}
-
-.phone-revealed:hover {
-    background-color: #00a8ff;
-    color: #ffffff;
-    transform: translateY(-2px);
-}
-
-@keyframes fadeInPhone {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 body.dark-theme .phone-revealed {
@@ -966,46 +782,131 @@ body.dark-theme .phone-revealed:hover {
     color: #ffffff;
 }
 
-/* --- ГЛОБАЛЬНОЕ ИСПРАВЛЕНИЕ ТЕКСТА И ЗАГОЛОВКОВ В ТЕМНОЙ ТЕМЕ --- */
-body.dark-theme h2 {
-    color: #ffffff !important;
+body.dark-theme .cookie-banner {
+    background: #0f131a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-body.dark-theme section p,
-body.dark-theme p {
-    color: #a4b0be !important;
+body.dark-theme .cookie-content p {
+    color: #f1f2f6;
 }
 
-/* --- ЕДИНАЯ НЕОНОВАЯ ПОДСВЕТКА ДЛЯ БЛОКОВ И КАРТОЧЕК --- */
-.calc-card,
-.faq-item {
-    transition: all 0.35s ease-in-out !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 12px;
+/* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ --- */
+@media (max-width: 768px) {
+    header { padding: 15px 20px; }
+    .logo { font-size: 18px; }
+    nav a { margin-left: 12px; font-size: 14px; }
 }
 
-.calc-card:hover,
-.faq-item:hover {
-    box-shadow: 0 0 25px rgba(0, 168, 255, 0.35), 0 0 50px rgba(224, 86, 253, 0.2) !important;
-    border-color: rgba(0, 168, 255, 0.7) !important;
-    transform: translateY(-2px);
+/* --- НАСТОЯЩЕЕ ПОГЛОЩЕНИЕ И СХЛОПЫВАНИЕ ТЕМЫ (VIEW TRANSITIONS) --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }
 
-/* Делаем единую карточку для секции контактов */
-#contacts {
-    transition: all 0.35s ease-in-out !important;
-    border: 1px solid transparent;
-    border-radius: 16px;
+/* Переход на ТЕМНУЮ (круг растет из кнопки) */
+::view-transition-old(root) {
+    z-index: 1;
+}
+::view-transition-new(root) {
+    z-index: 9999;
+    animation: expand-circle 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-#contacts:hover {
-    box-shadow: 0 0 30px rgba(0, 168, 255, 0.25), 0 0 60px rgba(224, 86, 253, 0.15) !important;
-    border-color: rgba(0, 168, 255, 0.4) !important;
+/* Переход на СВЕТЛУЮ (темный экран сжимается обратно в кнопку) */
+.transitioning-to-light::view-transition-old(root) {
+    z-index: 9999;
+    animation: shrink-circle 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.transitioning-to-light::view-transition-new(root) {
+    z-index: 1;
+    animation: none;
 }
 
-/* Убираем лишние отдельные подсветки с внутренних элементов, чтобы они не светились по частям */
-.booking-form,
-.contact-box {
-    box-shadow: none !important;
-    border: none !important;
+/* Ключевые кадры анимации */
+@keyframes expand-circle {
+    0% {
+        clip-path: circle(0px at var(--x) var(--y));
+    }
+    100% {
+        clip-path: circle(150vmax at var(--x) var(--y));
+    }
+}
+
+@keyframes shrink-circle {
+    0% {
+        clip-path: circle(150vmax at var(--x) var(--y));
+    }
+    100% {
+        clip-path: circle(0px at var(--x) var(--y));
+    }
+}
+
+/* --- КРУПНАЯ ИНДУСТРИАЛЬНАЯ МЕТКА (ОПТИМАЛЬНАЯ ДЛИНА) --- */
+.tech-badge {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #111318; /* Черный для светлой темы */
+    border: 2px solid #2f3640;
+    padding: 8px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+/* Оптимальная длина блока с полосками (убавили на 3 штуки) */
+.tech-stripes {
+    width: 108px; /* Уменьшили ширину */
+    height: 30px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #ffffff,
+        #ffffff 6px,    /* Толщина полосы сохранена */
+        transparent 6px,
+        transparent 12px /* Шаг сохранен */
+    );
+    transform: skewX(-15deg);
+}
+
+/* Крупная цифра 02 */
+.tech-number {
+    font-family: monospace, sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #ffffff;
+}
+
+/* --- ПОДДЕРЖКА ТЕМНОЙ ТЕМЫ --- */
+body.dark-theme .tech-badge {
+    background: #f1f2f6; /* Белая плашка в темной теме */
+    border-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+}
+
+body.dark-theme .tech-stripes {
+    background: repeating-linear-gradient(
+        -45deg,
+        #111318,
+        #111318 6px,
+        transparent 6px,
+        transparent 12px
+    );
+}
+
+body.dark-theme .tech-number {
+    color: #111318;
+}
+
+/* Скрываем на мобильных экранах */
+@media (max-width: 900px) {
+    .tech-badge {
+        display: none;
+    }
 }
