@@ -164,23 +164,84 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(block);
     });
 
-    // --- ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ---
-    const themeToggleBtn = document.getElementById('themeToggle');
+    // --- УМНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ (ЧИСТЫЙ CSS + VIEW TRANSITIONS) ---
+const themeToggleBtn = document.getElementById('themeToggle');
 
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', function (event) {
-            event.stopPropagation();
-            document.body.classList.toggle('dark-theme');
-            
-            if (document.body.classList.contains('dark-theme')) {
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function () {
+        const isCurrentlyDark = document.body.classList.contains('dark-theme');
+        const nextDarkState = !isCurrentlyDark;
+
+        // Узнаем координаты центра кнопки
+        const rect = themeToggleBtn.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        // Передаем координаты в CSS-переменные
+        document.documentElement.style.setProperty('--x', x + 'px');
+        document.documentElement.style.setProperty('--y', y + 'px');
+
+        // Если браузер не поддерживает View Transitions — просто переключаем
+        if (!document.startViewTransition) {
+            if (nextDarkState) {
+                document.body.classList.add('dark-theme');
                 localStorage.setItem('theme', 'dark');
             } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            }
+            return;
+        }
+
+        // Управляем классом направления анимации
+        if (!nextDarkState) {
+            document.documentElement.classList.add('transitioning-to-light');
+        } else {
+            document.documentElement.classList.remove('transitioning-to-light');
+        }
+
+        // Запуск нативного перехода
+        const transition = document.startViewTransition(() => {
+            if (nextDarkState) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
                 localStorage.setItem('theme', 'light');
             }
         });
 
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-theme');
+        // Очищаем класс после завершения анимации
+        transition.finished.finally(() => {
+            document.documentElement.classList.remove('transitioning-to-light');
+        });
+    });
+}
+});
+
+document.getElementById('booking-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('client-name').value,
+        phone: document.getElementById('client-phone').value
+    };
+
+    try {
+        const response = await fetch('https://raspy-poetry-fe03.berserkerhv.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+            alert('Спасибо! Заявка успешно отправлена.');
+            e.target.reset();
+        } else {
+            alert('Ошибка при отправке. Попробуйте позже.');
         }
+    } catch (err) {
+        alert('Ошибка соединения с сервером.');
+        console.error(err);
     }
 });
