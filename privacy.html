@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Политика в отношении обработки файлов Cookie и публичная оферта</title>
+    <title>Политика в отношении обработки файлов Cookie и условия использования</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -21,6 +21,28 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             border: 1px solid #dcdde1;
+            position: relative; /* Нужно для правильного позиционирования стрелочки */
+        }
+        /* Стили для кнопки «Назад» */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #57606f;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 25px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #00a8ff;
+            transform: translateX(-3px);
+        }
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
         h1 {
             font-size: 24px;
@@ -53,6 +75,12 @@
 <body>
 
 <div class="container">
+    <!-- Кнопка возврата на главную -->
+    <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        На главную
+    </a>
+
     <h1>Политика в отношении обработки файлов Cookie и условия использования</h1>
 
     <h2>1. Термины</h2>
