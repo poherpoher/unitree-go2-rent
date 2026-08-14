@@ -1103,3 +1103,78 @@ header, .header, .navbar {
 body {
     padding-top: 0;
 }
+
+.callback-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.callback-subtitle {
+    color: #596773;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+}
+
+.callback-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    height: 64px;
+    background: #111418;
+    border: 1px solid #2a323d;
+    border-radius: 16px;
+    text-decoration: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.callback-btn:hover {
+    border-color: #0098ff;
+    transform: translateY(-2px);
+}
+
+/* Линии стали чуть длиннее (шаг 6px / 12px) и светлее (прозрачность 0.22) */
+.callback-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0.22) 6px,
+        transparent 6px,
+        transparent 12px
+    );
+    pointer-events: none;
+}
+
+/* Внутренняя плашка фона, закрывающая центр под рамку */
+.callback-btn::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+    background: #111418;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.callback-text {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
